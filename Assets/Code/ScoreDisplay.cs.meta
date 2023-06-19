@@ -3,7 +3,10 @@ guid: f7c49e5faf3df2446a09bf3637f34a34
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - TeamBlack: {instanceID: 0}
+  - TeamRed: {instanceID: 0}
+  - winnerText: {fileID: 7967166519451277220, guid: 47d5ac2bcde106a4da2adb688df859cc, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

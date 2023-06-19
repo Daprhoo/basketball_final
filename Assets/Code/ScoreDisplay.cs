@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreDisplay : MonoBehaviour
 {
     public Text TeamBlack;
     public Text TeamRed;
+    public Text winnerText;
 
     public int teamBlackScore = 0;
     public int teamRedScore = 0;
@@ -18,15 +18,5 @@ public class ScoreDisplay : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

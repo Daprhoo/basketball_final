@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class TimerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TimerController : MonoBehaviour
     public Text timerText; // UI'da süreyi göstermek için Text elemanı
 
     private bool isTimerRunning; // Timer'ın çalışıp çalışmadığını kontrol etmek için bool değişkeni
+    internal static object instance;
 
     private void Start()
     {
@@ -29,7 +31,7 @@ public class TimerController : MonoBehaviour
                 // Zaman dolduğunda yapılması gereken işlemleri burada gerçekleştirebilirsiniz.
                 // Örneğin, oyunu durdurabilir veya sonuçları değerlendirebilirsiniz.
                 isTimerRunning = false; // Timer'ı durdur
-                SceneManager.LoadScene(0); // Ana menü sahnesine geçiş yap
+                SceneManager.LoadScene(2); // Ana menü sahnesine geçiş yap
             }
 
             UpdateTimerUI(); // Zamanlayıcıyı güncellemek için UI elemanını güncelle
@@ -50,7 +52,10 @@ public class TimerController : MonoBehaviour
         {
             isTimerRunning = false; // Timer'ı durdur
             timerText.text = "00:00"; // Süre dolunca ekranda 00:00 göster
-            SceneManager.LoadScene(0); // Ana menü sahnesine geçiş yap
+            SceneManager.LoadScene(2); // Ana menü sahnesine geçiş yap
         }
     }
+    
+
+
 }

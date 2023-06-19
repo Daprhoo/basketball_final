@@ -15,17 +15,8 @@ public class ScoreTrigger : MonoBehaviour
         Debug.Log("team black " + ScoreDisplay.instance.teamBlackScore);
         ScoreDisplay.instance.TeamBlack.text = ScoreDisplay.instance.teamBlackScore.ToString();
         ball.transform.position = playersHand.position;
+        //ScoreDisplay.instance.CheckWinner();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
