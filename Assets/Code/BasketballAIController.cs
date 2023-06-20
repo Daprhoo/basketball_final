@@ -25,7 +25,10 @@ public class BasketballAIController : MonoBehaviour
     private float throwingHeight = 5;
     private float throwingProgress = 0;
     private Rigidbody ballRigidbody;
-
+    private float minX = -9.5f;
+    private float maxX = 9.5f;
+    private float minZ = -9.5f;
+    private float maxZ = 9.5f;
     private void Awake()
     {
         ballRigidbody = ball.GetComponent<Rigidbody>();
@@ -40,12 +43,15 @@ public class BasketballAIController : MonoBehaviour
 
     private void HandleMovement()
     {
-        float horizontalInput = Input.GetAxisRaw("Vertical2");
-        float verticalInput = Input.GetAxisRaw("Horizontal2");
+        Vector3 direction = new Vector3(Input.GetAxisRaw("Vertical2"), 0, Input.GetAxisRaw("Horizontal2"));
+        Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+        
+        // Hareket sınırlarını kontrol et
+        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+        newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
-        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
-        transform.LookAt(transform.position + moveDirection);
+        transform.position = newPosition;
+        transform.LookAt(transform.position + direction);
     }
 
     private void HandleBallControl()
@@ -103,16 +109,4 @@ public class BasketballAIController : MonoBehaviour
         
     }
 
-    
-
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Hoop"))
-        {
-            Vector3 normal = collision.contacts[0].normal;
-            float bounce = 10f;
-            Vector3 bounceVector = Vector3.Reflect(ballRigidbody.velocity, normal);
-            ballRigidbody.velocity = bounceVector * bounce;
-        }
-    }
 }

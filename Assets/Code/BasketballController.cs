@@ -6,10 +6,7 @@ using UnityEngine;
 public class BasketballController : MonoBehaviour {
 
     public int playerNumber;
-    //[SerializeField]
-    //private int score = 0;
-    //[SerializeField]
-    //private TextMeshProUGUI scoreText;
+    
     [SerializeField]
     private float moveSpeed = 10;
     [SerializeField] private Transform ball, posDribble, posOverHead, arms, target;
@@ -25,9 +22,14 @@ public class BasketballController : MonoBehaviour {
 
     private Rigidbody ballRigidbody;
     private float ballScorePosition;
+    private float minX = -9.5f;
+    private float maxX = 9.5f;
+    private float minZ = -9.5f;
+    private float maxZ = 9.5f;
 
     private void Awake() {
         ballRigidbody = ball.GetComponent<Rigidbody>();
+        playerNumber = 1;
     }
 
     private void Update() {
@@ -37,11 +39,20 @@ public class BasketballController : MonoBehaviour {
     }
 
     // oyuncunun hareket kontrolü:
-    private void HandleMovement() {
+
+    private void HandleMovement()
+    {
         Vector3 direction = new Vector3(Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
-        transform.position += direction * moveSpeed * Time.deltaTime;
+        Vector3 newPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+        
+        // Hareket sınırlarını kontrol et
+        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+        newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
+
+        transform.position = newPosition;
         transform.LookAt(transform.position + direction);
     }
+
     //topun kontrolü ve oyuncunun hareketlerine yanıt vermesi:
     private void HandleBallControl() {
         if (isBallInHands) {
@@ -83,21 +94,4 @@ public class BasketballController : MonoBehaviour {
             ballRigidbody.isKinematic = true;
         }
     }
-
-    
-
-    //topun çembere çarpması ve geri tepmesi:
-    void OnCollisionStay(Collision collision)
-{
-    if (collision.gameObject.CompareTag("Hoop"))
-    {
-        Vector3 normal = collision.contacts[0].normal;
-        float bounce = 10f;
-        Vector3 bounceVector = Vector3.Reflect(ballRigidbody.velocity, normal);
-        ballRigidbody.velocity = bounceVector * bounce;
-    }
-
-    
-    }
-
 }
